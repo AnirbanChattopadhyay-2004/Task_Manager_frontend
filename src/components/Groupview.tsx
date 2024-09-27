@@ -25,6 +25,10 @@ const priorityColors = {
 }
 
 const TaskCard: React.FC<{ task: Task; moveTask: (_id: string, status: 'todo' | 'in-progress' | 'completed') => void;tasks:any }> = ({ task, moveTask,tasks }) => {
+  const dragRef = (element: HTMLDivElement | null) => {
+    drag(element)
+  }
+  
   const [{ isDragging }, drag] = useDrag(() => ({
     type: 'task',
     item: { id: task._id },
@@ -34,7 +38,7 @@ const TaskCard: React.FC<{ task: Task; moveTask: (_id: string, status: 'todo' | 
   }))
 
   return (
-    <div ref={drag} style={{ opacity: isDragging ? 0.5 : 1 }}>
+    <div ref={dragRef} style={{ opacity: isDragging ? 0.5 : 1 }}>
       <Card className="mb-4 bg-gray-800 border-gray-900">
         <CardContent className="p-4">
           {/* <h3 className="text-lg font-semibold text-gray-100 mb-2">{task.title}</h3> */}
@@ -56,9 +60,11 @@ const Column: React.FC<{ title: string; tasks: Task[]; status: 'todo' | 'in-prog
     accept: 'task',
     drop: (item: { id: string }) => moveTask(item.id, status),
   }))
-
+  const dropRef = (element: HTMLDivElement | null) => {
+    drop(element)
+  }
   return (
-    <div ref={drop} className="bg-gray-950 border-2 border-gray-800 p-4 rounded-lg shadow-lg flex-1 min-h-[500px]">
+    <div ref={dropRef} className="bg-gray-950 border-2 border-gray-800 p-4 rounded-lg shadow-lg flex-1 min-h-[500px]">
       <h2 className={`text-xl font-bold mb-4 text-gray-400`}>{title}</h2>
       {tasks.map((task) => (
         <TaskCard key={task._id} task={task} tasks={tasks} moveTask={moveTask} />

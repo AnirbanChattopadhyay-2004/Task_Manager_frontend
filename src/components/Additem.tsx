@@ -30,12 +30,9 @@ import { Button } from "./ui/button"
 import { Label } from "./ui/label"
 import { Input } from "./ui/input"
 import { Textarea } from "./ui/textarea"
+import { Task } from './Tableview'
 
-interface AdditemProps {
-  setNotes: React.Dispatch<React.SetStateAction<any[]>>
-}
-
-const Additem: React.FC<AdditemProps> = ({ setNotes }) => {
+export function Additem({setNotes}:{setNotes : (task : any)=>void}) {
   const [isOpen, setIsOpen] = useState(false)
   const [formData, setFormData] = useState({
     title: "",
@@ -65,7 +62,7 @@ const Additem: React.FC<AdditemProps> = ({ setNotes }) => {
         }
       })
       if (res) {
-        setNotes((prev: any) => [...prev, note])
+        setNotes((prev: Task[]) => [...prev, note])
         setIsOpen(false)
         setFormData({
           title: "",

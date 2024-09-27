@@ -22,7 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-interface Task {
+export interface Task {
   _id: string;
   title: string;
   description: string;
@@ -31,7 +31,7 @@ interface Task {
   duedate: Date | null;
 }
 const Tableview = () => {
-  const [Notes, setNotes] = useState<any>();
+  const [Notes, setNotes] = useState<Task[]>();
 
   const token: any = getCookie("token");
 
